@@ -392,5 +392,3 @@ export const environment = { baseUrl: 'http://localhost:8081' };
 * **Mock**: Servicio Node que emula el restaurante externo.
 
 ---
-
-> Con esta guía deberías poder: entender el flujo completo, ubicar y editar cada archivo clave, y correr una prueba end‑to‑end en minutos.
