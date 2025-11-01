@@ -1,0 +1,43 @@
+.hero {
+  background: linear-gradient(135deg, #ffe6cc, #ffd1dc);
+  border-radius: 16px;
+  padding: 28px 20px;
+  margin-bottom: 18px;
+
+  &__content {
+    max-width: 900px;
+    h1 { margin: 0 0 6px; font-size: 2rem; }
+    p  { margin: 0; color: #333; }
+  }
+}
+
+.promos {
+  h2 { margin: 10px 0 14px; }
+  .grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+}
+
+.skeleton-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+}
+
+.skeleton {
+  height: 144px;
+  border-radius: 14px;
+  background: linear-gradient(90deg,#eee 25%,#f5f5f5 37%,#eee 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.error { color: #b00020; }
+.empty { color: #666; }

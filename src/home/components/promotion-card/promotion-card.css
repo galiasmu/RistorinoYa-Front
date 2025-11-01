@@ -1,0 +1,7 @@
+.header {
+  display: flex; gap: 16px; align-items: center; margin-bottom: 12px;
+  &__img { width: 96px; height: 96px; object-fit: cover; border-radius: 12px; }
+}
+.muted { color:#666; }
+.error { color: #b00020; }
+.loading { color:#333; }

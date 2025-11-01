@@ -1,1 +1,21 @@
-<p>promotion-card works!</p>
+<section *ngIf="loading" class="loading" aria-busy="true">Cargando restaurante…</section>
+<section *ngIf="!loading">
+  <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+  <ng-container *ngIf="(restaurant$ | async) as r">
+    <header class="header">
+      <img *ngIf="r.imageUrl" [src]="r.imageUrl" [alt]="r.name" class="header__img" />
+      <div>
+        <h1>{{ r.name }}</h1>
+        <p class="muted">{{ r.address }}</p>
+      </div>
+    </header>
+
+    <article class="content">
+      <p>{{ r.description }}</p>
+      <p *ngIf="r.phone">Tel: {{ r.phone }}</p>
+      <p *ngIf="r.website">
+        Web: <a [href]="r.website" target="_blank" rel="noopener">Visitar sitio</a>
+      </p>
+    </article>
+  </ng-container>
+</section>
