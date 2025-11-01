@@ -1,0 +1,26 @@
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import {PromotionsService} from '../../services/promotions/promotion.service';
+import { Restaurant } from '../../models/restaurant.model';
+
+@Component({
+  selector: 'rs-restaurant-detail',
+  templateUrl: './restaurant-detail.component.html',
+  styleUrls: ['./restaurant-detail.component.css']
+})
+export class RestaurantDetailComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private promosSvc = inject(PromotionsService);
+
+  restaurant = signal<Restaurant | null>(null);
+
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
+      this.promosSvc.getRestaurant(id).subscribe({
+        next: r => this.restaurant.set(r),
+        error: _ => this.restaurant.set(null)
+      });
+    }
+  }
+}

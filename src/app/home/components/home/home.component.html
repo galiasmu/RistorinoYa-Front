@@ -1,0 +1,17 @@
+<section *ngIf="!loading(); else loadTpl">
+  <p *ngIf="error()" class="text-red-600">{{ error() }}</p>
+
+  <div class="grid gap-4 md:grid-cols-3">
+    <rs-promotion-card
+      *ngFor="let p of promos()"
+      [promotion]="p"
+      (open)="onOpenPromotion(p)">
+    </rs-promotion-card>
+  </div>
+
+  <p *ngIf="!promos().length && !error()">No hay promociones activas.</p>
+</section>
+
+<ng-template #loadTpl>
+  <p>Cargando promociones…</p>
+</ng-template>

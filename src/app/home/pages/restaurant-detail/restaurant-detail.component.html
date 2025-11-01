@@ -1,0 +1,10 @@
+<section *ngIf="restaurant() as r; else empty">
+  <h1 class="text-2xl font-bold">{{ r.name }}</h1>
+  <p class="mt-2">{{ r.description || 'Sin descripción' }}</p>
+  <p class="mt-1 text-sm text-gray-600">{{ r.address }}</p>
+  <a *ngIf="r.website" [href]="r.website" target="_blank" rel="noopener">Sitio web</a>
+</section>
+
+<ng-template #empty>
+  <p>No se encontró el restaurante.</p>
+</ng-template>
