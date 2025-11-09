@@ -1,0 +1,89 @@
+<app-sidenav></app-sidenav>
+
+<div class="promo-detail-layout" *ngIf="!loading(); else loadingTpl">
+  <main class="pd-main" *ngIf="promotion() as promo; else notFound">
+    <button class="pd-back" (click)="goBack()">
+      ← Back to Promotions
+    </button>
+
+    <div class="pd-content">
+      <!-- CARD IZQUIERDA -->
+      <section class="pd-card pd-card-main">
+        <div class="pd-image-wrapper">
+          <img [src]="promo.imageUrl" [alt]="promo.title" />
+        </div>
+
+        <div class="pd-tag-row">
+          <span class="pd-tag">Special Offer</span>
+        </div>
+
+        <h1 class="pd-title">{{ promo.title }}</h1>
+        <p class="pd-subtitle">
+          {{ restaurant()?.name || 'Premium dining experience.' }}
+        </p>
+
+        <section class="pd-section">
+          <h2 class="pd-section-title">How to Redeem</h2>
+          <p class="pd-text">
+            Simply book a table through our portal and show this promotion upon
+            arrival at the restaurant. Payment terms and eligibility may apply.
+          </p>
+        </section>
+
+        <section class="pd-section">
+          <h2 class="pd-section-title">Terms &amp; Conditions</h2>
+          <ul class="pd-list">
+            <li>Offer valid for dine-in only.</li>
+            <li>
+              Complimentary item must be of equal or lesser value than the paid
+              item.
+            </li>
+            <li>Not valid on public holidays or special events.</li>
+            <li>
+              Subject to availability at the participating restaurant location.
+            </li>
+          </ul>
+        </section>
+      </section>
+
+      <!-- COLUMNA DERECHA -->
+      <aside class="pd-aside">
+        <section class="pd-card pd-cta-card">
+          <h3>Reserve Now</h3>
+          <p>Secure your table at {{ restaurant()?.name || 'this restaurant' }}.</p>
+          <button class="pd-btn-primary">
+            Reserve Now →
+          </button>
+        </section>
+
+        <section class="pd-card">
+          <h4 class="pd-aside-title">Validity Period</h4>
+          <p class="pd-text">
+            Offer valid while promotion is active.
+          </p>
+        </section>
+
+        <section class="pd-card" *ngIf="restaurant() as r">
+          <h4 class="pd-aside-title">Participating Location</h4>
+          <p class="pd-text">
+            {{ r.address || 'Address not available.' }}
+          </p>
+          <p class="pd-text" *ngIf="r.phone">Phone: {{ r.phone }}</p>
+          <p class="pd-text" *ngIf="r.website">
+            Website: <a [href]="r.website" target="_blank" rel="noopener">{{ r.website }}</a>
+          </p>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <ng-template #notFound>
+    <p class="pd-text">Promotion not found.</p>
+  </ng-template>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="pd-loading">Loading promotion…</div>
+</ng-template>
+
+<app-footer></app-footer>

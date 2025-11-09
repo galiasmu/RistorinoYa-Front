@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es-AR" datatype="plaintext" original="ng2.template" target-language="es-AR">
+    <body>
+      <trans-unit id="6101011442697767518" datatype="html">
+        <source> PRUEBA DE CAMBIO DE IDIOMA</source><target state="final"> PRUEBA DE CAMBIO DE IDIOMA</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/components/promotion-card/promotion-card.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </body>
+  </file>
+</xliff>

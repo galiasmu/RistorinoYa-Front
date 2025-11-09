@@ -1,17 +1,69 @@
-<section *ngIf="!loading(); else loadTpl">
-  <p *ngIf="error()" class="text-red-600">{{ error() }}</p>
 
-  <div class="grid gap-4 md:grid-cols-3">
-    <rs-promotion-card
-      *ngFor="let p of promos()"
-      [promotion]="p"
-      (open)="onOpenPromotion(p)">
-    </rs-promotion-card>
-  </div>
+<div class="layout">
 
-  <p *ngIf="!promos().length && !error()">No hay promociones activas.</p>
-</section>
+  <header>
+    <app-sidenav></app-sidenav>
 
-<ng-template #loadTpl>
-  <p>Cargando promociones…</p>
-</ng-template>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">Your next great meal awaits.</h1>
+        <p class="hero-subtitle">
+          Discover and book the best restaurants in your city.
+        </p>
+
+        <!-- SEARCH BAR (placeholder por ahora) -->
+        <div class="hero-search">
+          <div class="search-field">
+            <span class="search-label">Location</span>
+            <input
+              type="text"
+              placeholder="Location, Cuisine, Restaurant Name..."
+            />
+          </div>
+
+          <div class="search-field">
+            <span class="search-label">Date</span>
+            <input type="date" />
+          </div>
+
+          <div class="search-field">
+            <span class="search-label">Guests</span>
+            <input type="number" min="1" value="2" />
+          </div>
+
+          <button class="btn-primary">Find a Table</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXCLUSIVE PROMOTIONS -->
+    <section class="section section-promos">
+      <div class="section-header">
+        <div>
+          <h2>Exclusive Promotions</h2>
+          <p class="section-subtitle">Handpicked deals at top restaurants.</p>
+        </div>
+        <button class="btn-link">View all</button>
+      </div>
+
+      <div class="promos-grid" *ngIf="promos().length; else emptyPromos">
+        <rs-promotion-card
+          *ngFor="let p of promos()"
+          [promotion]="p"
+          (open)="onOpenPromotion(p)"
+        ></rs-promotion-card>
+      </div>
+
+      <ng-template #emptyPromos>
+        <p class="section-empty">No promotions available at the moment.</p>
+      </ng-template>
+    </section>
+  </main>
+  <app-footer></app-footer>
+</div>

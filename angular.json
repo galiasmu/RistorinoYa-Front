@@ -9,20 +9,32 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+
+      "i18n": {
+        "locales": {
+          "en": {
+            "translation": "src/locale/messages.en.xlf",
+            "baseHref": "/en/"
+          },
+          "es-AR": {
+            "translation": "src/locale/messages.es-AR.xlf",
+            "baseHref": ""
+          }
+        }
+      },
+
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js"
+              "zone.js",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              { "glob": "**/*", "input": "public" }
             ],
             "styles": [
               "src/styles.css"
@@ -31,16 +43,8 @@
           "configurations": {
             "production": {
               "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
-                }
+                { "type": "initial", "maximumWarning": "500kB", "maximumError": "1MB" },
+                { "type": "anyComponentStyle", "maximumWarning": "4kB", "maximumError": "8kB" }
               ],
               "outputHashing": "all"
             },
@@ -48,10 +52,37 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+
+            /* === Configs de i18n (ahora sí dentro de build.configurations) === */
+            "development-es": {
+              "localize": ["es-AR"],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+            },
+            "development-en": {
+              "localize": ["en"],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
         },
+
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
@@ -60,26 +91,28 @@
             },
             "development": {
               "buildTarget": "RistorinoYa-Front:build:development"
+            },
+            "development-es": {
+              "buildTarget": "RistorinoYa-Front:build:development-es"
+            },
+            "development-en": {
+              "buildTarget": "RistorinoYa-Front:build:development-en"
             }
           },
           "defaultConfiguration": "development"
         },
-        "extract-i18n": {
-          "builder": "@angular/build:extract-i18n"
-        },
+
         "test": {
           "builder": "@angular/build:karma",
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              { "glob": "**/*", "input": "public" }
             ],
             "styles": [
               "src/styles.css"

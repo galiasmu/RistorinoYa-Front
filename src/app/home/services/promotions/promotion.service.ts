@@ -4,6 +4,8 @@ import {environment} from '../../../../enviroments/environment.development';
 import { Observable } from 'rxjs';
 import { Promotion } from '../../models/promotion.model';
 import { Restaurant } from '../../models/restaurant.model';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({ providedIn: 'root' })
 export class PromotionsService {
@@ -17,4 +19,14 @@ export class PromotionsService {
   getRestaurant(id: number): Observable<Restaurant> {
     return this.http.get<Restaurant>(`${this.base}/api/restaurants/${id}`);
   }
+  getPromotion(id: number): Observable<Promotion> {
+    return this.http.get<Promotion>(`${this.base}/api/promotions/${id}`);
+
+  }
+  getPromotionFromList(id: number): Observable<Promotion | null> {
+    return this.listPromotions().pipe(
+      map(res => res.content.find(p => p.id === id) ?? null)
+    );
+  }
+
 }
