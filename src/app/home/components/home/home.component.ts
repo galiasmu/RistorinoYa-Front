@@ -2,8 +2,8 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 
-import { Promotion } from '../../models/promotion.model';
-import {PromotionsService} from '../../services/promotions/promotion.service';
+import { PromotionDTO } from '../../models/promotion.model';
+import {PromotionService} from '../../services/promotions/promotion.service';
 import { ClickService } from '../../services/click/click.service';
 
 import {SidenavComponent} from '../../../shared/components/sidenav/sidenav';
@@ -25,18 +25,18 @@ import { PromotionCardComponent } from '../promotion-card/promotion-card.compone
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  private promosSvc = inject(PromotionsService);
+  private promosSvc = inject(PromotionService);
   private clicksSvc = inject(ClickService);
   private router = inject(Router);
 
   loading = signal(true);
-  promos = signal<Promotion[]>([]);
+  promos = signal<PromotionDTO[]>([]);
   error = signal<string | null>(null);
 
   ngOnInit(): void {
-    this.promosSvc.listPromotions().subscribe({
-      next: res => {
-        this.promos.set(res.content ?? []);
+    this.promosSvc.getVigentes().subscribe({
+      next: (promotions: PromotionDTO[]) => {
+        this.promos.set(promotions);
         this.loading.set(false);
       },
       error: () => {
@@ -46,11 +46,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  onOpenPromotion(p: Promotion) {
+
+  onOpenPromotion(p: PromotionDTO) {
     // 1️⃣ Registrar el clic
-    this.clicksSvc.registerClick(p.id).subscribe({ error: () => {} });
+    this.clicksSvc.registerClick(p.nroContenido).subscribe({ error: () => {} });
 
     // 2️⃣ Navegar al detalle de la promoción
-    this.router.navigate(['/promotions', p.id]);
+    this.router.navigate(['/promotions', p.nroContenido]);
   }
 }

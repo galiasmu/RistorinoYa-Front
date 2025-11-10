@@ -10,23 +10,23 @@
       <!-- CARD IZQUIERDA -->
       <section class="pd-card pd-card-main">
         <div class="pd-image-wrapper">
-          <img [src]="promo.imageUrl" [alt]="promo.title" />
+          <img [src]="promo.imagenPromocional" [alt]="promo.contenidoPromocional" />
         </div>
 
         <div class="pd-tag-row">
-          <span class="pd-tag">Special Offer</span>
+          <span class="pd-tag">{{ promo.razonSocial }}</span>
         </div>
 
-        <h1 class="pd-title">{{ promo.title }}</h1>
-        <p class="pd-subtitle">
-          {{ restaurant()?.name || 'Premium dining experience.' }}
-        </p>
+        <h1 class="pd-title">{{ promo.contenidoPromocional }}</h1>
+        <p class="pd-subtitle">{{ promo.contenidoAPublicar }}</p>
 
         <section class="pd-section">
-          <h2 class="pd-section-title">How to Redeem</h2>
-          <p class="pd-text">
-            Simply book a table through our portal and show this promotion upon
-            arrival at the restaurant. Payment terms and eligibility may apply.
+          <h2 class="pd-section-title">Promotion Details</h2>
+          <p class="pd-text">{{ promo.contenidoAPublicar }}</p>
+          <p class="pd-text"><strong>Restaurant:</strong> {{ promo.razonSocial }}</p>
+          <p class="pd-text"><strong>Branch:</strong> {{ promo.nomSucursal }}</p>
+          <p class="pd-text" *ngIf="promo.costoClick">
+            <strong>Cost per Click:</strong> ${{ promo.costoClick }}
           </p>
         </section>
 
@@ -34,14 +34,9 @@
           <h2 class="pd-section-title">Terms &amp; Conditions</h2>
           <ul class="pd-list">
             <li>Offer valid for dine-in only.</li>
-            <li>
-              Complimentary item must be of equal or lesser value than the paid
-              item.
-            </li>
+            <li>Valid until {{ promo.fechaFinVigencia | date:'mediumDate' }}</li>
             <li>Not valid on public holidays or special events.</li>
-            <li>
-              Subject to availability at the participating restaurant location.
-            </li>
+            <li>Subject to availability at the participating restaurant location.</li>
           </ul>
         </section>
       </section>
@@ -50,28 +45,23 @@
       <aside class="pd-aside">
         <section class="pd-card pd-cta-card">
           <h3>Reserve Now</h3>
-          <p>Secure your table at {{ restaurant()?.name || 'this restaurant' }}.</p>
-          <button class="pd-btn-primary">
-            Reserve Now →
-          </button>
+          <p>Secure your table at {{ promo.razonSocial }}.</p>
+          <button class="pd-btn-primary">Reserve Now →</button>
         </section>
 
         <section class="pd-card">
           <h4 class="pd-aside-title">Validity Period</h4>
           <p class="pd-text">
-            Offer valid while promotion is active.
+            <strong>Start:</strong> {{ promo.fechaIniVigencia | date:'mediumDate' }}<br>
+            <strong>End:</strong> {{ promo.fechaFinVigencia | date:'mediumDate' }}
           </p>
         </section>
 
-        <section class="pd-card" *ngIf="restaurant() as r">
+        <section class="pd-card">
           <h4 class="pd-aside-title">Participating Location</h4>
-          <p class="pd-text">
-            {{ r.address || 'Address not available.' }}
-          </p>
-          <p class="pd-text" *ngIf="r.phone">Phone: {{ r.phone }}</p>
-          <p class="pd-text" *ngIf="r.website">
-            Website: <a [href]="r.website" target="_blank" rel="noopener">{{ r.website }}</a>
-          </p>
+          <p class="pd-text"><strong>{{ promo.razonSocial }}</strong></p>
+          <p class="pd-text">Branch: {{ promo.nomSucursal }}</p>
+          <p class="pd-text">Language: {{ promo.nomIdioma }}</p>
         </section>
       </aside>
     </div>

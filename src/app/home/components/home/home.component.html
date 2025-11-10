@@ -52,13 +52,12 @@
         <button class="btn-link">View all</button>
       </div>
 
-      <div class="promos-grid" *ngIf="promos().length; else emptyPromos">
-        <rs-promotion-card
-          *ngFor="let p of promos()"
-          [promotion]="p"
-          (open)="onOpenPromotion(p)"
-        ></rs-promotion-card>
+      <div class="promotions-grid">
+        @for (promo of promos(); track promo.nroRestaurante + '-' + promo.nroIdioma + '-' + promo.nroContenido) {
+          <rs-promotion-card [promotion]="promo"></rs-promotion-card>
+        }
       </div>
+
 
       <ng-template #emptyPromos>
         <p class="section-empty">No promotions available at the moment.</p>
