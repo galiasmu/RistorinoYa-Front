@@ -21,7 +21,6 @@ export class PromotionsService {
   }
   getPromotion(id: number): Observable<Promotion> {
     return this.http.get<Promotion>(`${this.base}/api/promotions/${id}`);
-
   }
   getPromotionFromList(id: number): Observable<Promotion | null> {
     return this.listPromotions().pipe(

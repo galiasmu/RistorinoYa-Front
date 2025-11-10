@@ -1,12 +1,9 @@
-
 <div class="layout">
 
   <header>
     <app-sidenav></app-sidenav>
-
   </header>
 
-  <!-- CONTENIDO -->
   <main>
     <!-- HERO -->
     <section class="hero">
@@ -52,7 +49,19 @@
         <button class="btn-link">View all</button>
       </div>
 
-      <div class="promos-grid" *ngIf="promos().length; else emptyPromos">
+      <!-- estado cargando -->
+      <p *ngIf="loading()">Cargando promociones...</p>
+
+      <!-- estado error -->
+      <p *ngIf="!loading() && error()" class="section-empty">
+        {{ error() }}
+      </p>
+
+      <!-- listado de promos -->
+      <div
+        class="promos-grid"
+        *ngIf="!loading() && !error() && promos().length; else emptyPromos"
+      >
         <rs-promotion-card
           *ngFor="let p of promos()"
           [promotion]="p"
@@ -61,9 +70,12 @@
       </div>
 
       <ng-template #emptyPromos>
-        <p class="section-empty">No promotions available at the moment.</p>
+        <p *ngIf="!loading() && !error()" class="section-empty">
+          No promotions available at the moment.
+        </p>
       </ng-template>
     </section>
   </main>
+
   <app-footer></app-footer>
 </div>
