@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import {PromotionsService} from '../../services/promotions/promotion.service';
-import { Promotion } from '../../models/promotion.model';
+import {PromotionService} from '../../services/promotions/promotion.service';
+import { PromotionDTO } from '../../models/promotion.model';
 import { Restaurant } from '../../models/restaurant.model';
 
 import {SidenavComponent} from '../../../shared/components/sidenav/sidenav';
@@ -19,36 +19,35 @@ import {FooterComponent} from '../../../shared/components/footer/footer';
 export class PromotionDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private promosSvc = inject(PromotionsService);
+  private promosSvc = inject(PromotionService);
 
-  promotion = signal<Promotion | null>(null);
   restaurant = signal<Restaurant | null>(null);
   loading = signal(true);
 
+  promotion = signal<PromotionDTO | null>(null);
+
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!id) {
+    const nroRestaurante = Number(this.route.snapshot.paramMap.get('nroRestaurante'));
+    const nroIdioma = Number(this.route.snapshot.paramMap.get('nroIdioma'));
+    const nroContenido = Number(this.route.snapshot.paramMap.get('nroContenido'));
+
+    if (!nroRestaurante || !nroIdioma || !nroContenido) {
       this.router.navigateByUrl('/');
       return;
     }
 
-    this.promosSvc.getPromotionFromList(id).subscribe({
+    this.promosSvc.getPromotionById(nroRestaurante, nroIdioma, nroContenido).subscribe({
       next: promo => {
         this.promotion.set(promo);
         this.loading.set(false);
-
-        if (promo && promo.restaurantId) {
-          this.promosSvc.getRestaurant(promo.restaurantId).subscribe({
-            next: r => this.restaurant.set(r),
-            error: () => {}
-          });
-        }
       },
       error: () => {
         this.loading.set(false);
       }
     });
   }
+
+
 
   goBack() {
     this.router.navigateByUrl('/');

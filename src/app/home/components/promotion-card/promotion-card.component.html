@@ -1,18 +1,15 @@
-<article class="promo-card" (click)="open.emit()">
+<article class="promo-card">
   <div class="promo-image-wrapper">
     <img
-      [src]="promotion.imageUrl"
-      [alt]="promotion.title"
+      [src]="promotion().imagenPromocional"
+      [alt]="promotion().contenidoPromocional"
       class="promo-image"
     />
   </div>
 
   <div class="promo-body">
-    <h3 class="promo-title">{{ promotion.title }}</h3>
-    <p class="promo-subtitle">
-      <!-- si más adelante el backend manda restaurantName, lo usás acá -->
-      Special offer
-    </p>
+    <h3 class="promo-title">{{ promotion().nomSucursal }}</h3>
+    <p class="promo-subtitle">Special offer</p>
 
     <button class="promo-button" type="button" (click)="onClick($event)">
       View Deal

@@ -1,18 +1,27 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Promotion } from '../../models/promotion.model';
-import {CommonModule} from '@angular/common';
+import { Component, input, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { PromotionDTO } from '../../models/promotion.model';
+
 @Component({
   selector: 'rs-promotion-card',
+  standalone: true,
   templateUrl: './promotion-card.component.html',
-  styleUrls: ['./promotion-card.component.css'],
-  imports: [CommonModule],
-  standalone: true
+  styleUrls: ['./promotion-card.component.css']
 })
 export class PromotionCardComponent {
-  @Input() promotion!: Promotion;
-  @Output() open = new EventEmitter<void>();
-  onClick(event: MouseEvent) {
+  promotion = input.required<PromotionDTO>();
+  private router = inject(Router);
+
+  onClick(event: Event): void {
     event.stopPropagation();
-    this.open.emit();
+    const promo = this.promotion();
+    this.router.navigate([
+      '/promotion',
+      promo.nroRestaurante,
+      promo.nroIdioma,
+      promo.nroContenido
+    ]).then(success => {
+      console.log('Navigation successful?', success);
+    });
   }
 }
