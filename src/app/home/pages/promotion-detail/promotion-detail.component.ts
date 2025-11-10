@@ -5,14 +5,10 @@ import {PromotionService} from '../../services/promotions/promotion.service';
 import { PromotionDTO } from '../../models/promotion.model';
 import { Restaurant } from '../../models/restaurant.model';
 
-import {SidenavComponent} from '../../../shared/components/sidenav/sidenav';
-import {FooterComponent} from '../../../shared/components/footer/footer';
-
 @Component({
   selector: 'rs-promotion-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule,SidenavComponent,
-    FooterComponent,],
+  imports: [CommonModule, RouterModule],
   templateUrl: './promotion-detail.component.html',
   styleUrls: ['./promotion-detail.component.css']
 })

@@ -15,7 +15,7 @@ export class PromotionService {
     if (hasta) params = params.set('hasta', hasta);
     return this.http.get<PromotionDTO[]>(`${this.apiUrl}/vigentes`, { params });
   }
-
+//usar programacion declarativa
   getPromotionById(nroRestaurante: number, nroIdioma: number, nroContenido: number): Observable<PromotionDTO> {
     return this.http.get<PromotionDTO>(`${this.apiUrl}/${nroRestaurante}/${nroIdioma}/${nroContenido}`);
   }
