@@ -12,6 +12,8 @@ export class PromotionCardComponent {
   promotion = input.required<PromotionModel>();
   private router = inject(Router);
 
+
+
   onClick(event: Event): void {
     event.stopPropagation();
     const promo = this.promotion();

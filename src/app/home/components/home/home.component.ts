@@ -24,7 +24,8 @@ import { PromotionCardComponent } from '../promotion-card/promotion-card.compone
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _route: ActivatedRoute, private _api: PromotionResource) { }
+  constructor(private _route: ActivatedRoute, private _api: PromotionResource) {
+  }
 
   loading = signal(true);
   promos = signal<PromotionModel[]>([]);
