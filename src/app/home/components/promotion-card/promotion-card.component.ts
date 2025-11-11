@@ -1,6 +1,6 @@
 import { Component, input, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { PromotionDTO } from '../../models/promotion.model';
+import { PromotionModel } from '../../api/models/promotion.model';
 
 @Component({
   selector: 'rs-promotion-card',
@@ -9,19 +9,19 @@ import { PromotionDTO } from '../../models/promotion.model';
   styleUrls: ['./promotion-card.component.css']
 })
 export class PromotionCardComponent {
-  promotion = input.required<PromotionDTO>();
+  promotion = input.required<PromotionModel>();
   private router = inject(Router);
 
   onClick(event: Event): void {
     event.stopPropagation();
     const promo = this.promotion();
+
+    // Navigate with resolver-compatible parameters
     this.router.navigate([
       '/promotion',
       promo.nroRestaurante,
       promo.nroIdioma,
       promo.nroContenido
-    ]).then(success => {
-      console.log('Navigation successful?', success);
-    });
+    ]);
   }
 }
