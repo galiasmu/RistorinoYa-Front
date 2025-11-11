@@ -1,4 +1,4 @@
-export interface PromotionDTO {
+export interface PromotionModel {
   nroRestaurante: number;
   nroIdioma: number;
   nroContenido: number;
