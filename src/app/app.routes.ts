@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { promotionResolver } from './home/resolvers/promotion.resolver';
+import { clickResolver } from './home/resolvers/click.resolver';
 import { PromotionDetailComponent } from './home/pages/promotion-detail/promotion-detail.component';
 
 export const routes: Routes = [
@@ -10,7 +11,10 @@ export const routes: Routes = [
   },
   {
     path: 'promotion/:nroRestaurante/:nroIdioma/:nroContenido',
-    component: PromotionDetailComponent,
-    resolve: { promotion: promotionResolver }
+    component: PromotionDetailComponent, // your detail component
+    resolve: {
+      promotion: promotionResolver,
+      click: clickResolver
+    }
   }
 ];
