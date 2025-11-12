@@ -1,25 +1,40 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {
+  Resource,
+  ResourceHandler,
+  ResourceAction,
+  ResourceParams,
+  ResourceRequestMethod,
+  ResourceResponseBodyType,
+  IResourceMethodObservable
+} from '@ngx-resource/core';
 import { PromotionModel } from '../models/promotion.model';
 import { environment } from '../../../../enviroments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class PromotionResource {
-  private base = `${environment.apiUrl}/promotions`;
-
-  constructor(private http: HttpClient) {}
-
-  getVigentes(): Observable<PromotionModel[]> {
-    return this.http.get<PromotionModel[]>(`${this.base}/vigentes`);
+@ResourceParams({
+  url: `${environment.apiUrl}/promotions`
+})
+export class PromotionResource extends Resource {
+  constructor(handler: ResourceHandler) {
+    super(handler);
   }
 
-  getPromotionDetail(params: {
+  @ResourceAction({
+    method: ResourceRequestMethod.Get,
+    path: '/vigentes',
+    responseBodyType: ResourceResponseBodyType.Json
+  })
+  declare getVigentes: IResourceMethodObservable<void, PromotionModel[]>;
+
+  @ResourceAction({
+    method: ResourceRequestMethod.Get,
+    path: '/{!nroRestaurante}/{!nroIdioma}/{!nroContenido}',
+    responseBodyType: ResourceResponseBodyType.Json
+  })
+  declare getPromotionDetail: IResourceMethodObservable<{
     nroRestaurante: number;
     nroIdioma: number;
     nroContenido: number;
-  }): Observable<PromotionModel> {
-    const { nroRestaurante, nroIdioma, nroContenido } = params;
-    return this.http.get<PromotionModel>(`${this.base}/${nroRestaurante}/${nroIdioma}/${nroContenido}`);
-  }
+  }, PromotionModel>;
 }

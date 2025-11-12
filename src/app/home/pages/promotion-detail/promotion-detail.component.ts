@@ -8,7 +8,7 @@ import { FooterComponent } from '../../../shared/components/footer/footer';
 @Component({
   selector: 'rs-promotion-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, SidenavComponent, FooterComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './promotion-detail.component.html',
   styleUrls: ['./promotion-detail.component.css']
 })

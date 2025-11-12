@@ -1,12 +1,9 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ActivatedRoute, Router, RouterModule} from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 import { PromotionModel } from '../../api/models/promotion.model';
 import { PromotionResource } from '../../api/resources/promotion.resource';
-
-import { SidenavComponent } from '../../../shared/components/sidenav/sidenav';
-import { FooterComponent } from '../../../shared/components/footer/footer';
 import { PromotionCardComponent } from '../promotion-card/promotion-card.component';
 
 @Component({
@@ -15,21 +12,17 @@ import { PromotionCardComponent } from '../promotion-card/promotion-card.compone
   imports: [
     CommonModule,
     RouterModule,
-    SidenavComponent,
-    FooterComponent,
     PromotionCardComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor(private _route: ActivatedRoute, private _api: PromotionResource) {
-  }
-
   loading = signal(true);
   promos = signal<PromotionModel[]>([]);
   error = signal<string | null>(null);
+
+  constructor(private _route: ActivatedRoute, private _api: PromotionResource) {}
 
   ngOnInit(): void {
     this._api.getVigentes().subscribe({
