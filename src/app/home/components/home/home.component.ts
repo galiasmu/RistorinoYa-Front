@@ -4,9 +4,6 @@ import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 
 import { PromotionModel } from '../../api/models/promotion.model';
 import { PromotionResource } from '../../api/resources/promotion.resource';
-
-import { SidenavComponent } from '../../../shared/components/sidenav/sidenav';
-import { FooterComponent } from '../../../shared/components/footer/footer';
 import { PromotionCardComponent } from '../promotion-card/promotion-card.component';
 
 @Component({
@@ -15,8 +12,6 @@ import { PromotionCardComponent } from '../promotion-card/promotion-card.compone
   imports: [
     CommonModule,
     RouterModule,
-    SidenavComponent,
-    FooterComponent,
     PromotionCardComponent
   ],
   templateUrl: './home.component.html',

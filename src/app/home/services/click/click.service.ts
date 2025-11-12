@@ -1,26 +1,17 @@
-import { Injectable } from '@angular/core';
+// src/app/home/services/monetization/click.service.ts
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ClickService {
-  private apiUrl = 'http://localhost:8080/api/clicks'; // 👈 apuntamos al backend Spring Boot
+  private http = inject(HttpClient);
+  private base = environment.baseUrl; // contiene /api
 
-  constructor(private http: HttpClient) {}
-
-  registerClick(
-    nroRestaurante: number,
-    nroIdioma: number,
-    nroContenido: number,
-    nroCliente: number | null = null
-  ): Observable<{ nroClick: number }> {
-    const body = {
-      nroRestaurante,
-      nroIdioma,
-      nroContenido,
-      nroCliente
-    };
-
-    return this.http.post<{ nroClick: number }>(this.apiUrl, body);
+  registerClick(nroRestaurante: number, nroIdioma: number, nroContenido: number) {
+    return this.http.post<{ nroClick: number }>(
+      `${this.base}/clicks`, // ✅ sin /api repetido
+      { nroRestaurante, nroIdioma, nroContenido, nroCliente: null }
+    );
   }
 }

@@ -2,13 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PromotionModel } from '../../api/models/promotion.model';
-import { SidenavComponent } from '../../../shared/components/sidenav/sidenav';
-import { FooterComponent } from '../../../shared/components/footer/footer';
+
 
 @Component({
   selector: 'rs-promotion-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, SidenavComponent, FooterComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './promotion-detail.component.html',
   styleUrls: ['./promotion-detail.component.css']
 })
