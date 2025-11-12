@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import {
   Resource,
-  ResourceHandler,
   ResourceAction,
   ResourceParams,
   ResourceRequestMethod,
   ResourceResponseBodyType,
-  IResourceMethodObservable
+  ResourceHandler,
 } from '@ngx-resource/core';
-import { PromotionModel } from '../models/promotion.model';
-import { environment } from '../../../../enviroments/environment';
+import type { IResourceMethodObservable } from '@ngx-resource/core'; // <-- type-only
+import type { PromotionModel } from '../models/promotion.model';     // <-- type-only
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 @ResourceParams({
-  url: `${environment.apiUrl}/promotions`
+  url: `${environment.apiUrl}`
 })
 export class PromotionResource extends Resource {
   constructor(handler: ResourceHandler) {
@@ -22,17 +22,17 @@ export class PromotionResource extends Resource {
 
   @ResourceAction({
     method: ResourceRequestMethod.Get,
-    path: '/vigentes',
+    path: '/promotions',
     responseBodyType: ResourceResponseBodyType.Json
   })
-  declare getVigentes: IResourceMethodObservable<void, PromotionModel[]>;
+  getVigentes!: IResourceMethodObservable<void, PromotionModel[]>;
 
   @ResourceAction({
     method: ResourceRequestMethod.Get,
-    path: '/{!nroRestaurante}/{!nroIdioma}/{!nroContenido}',
+    path: '/promotions/{!nroRestaurante}/{!nroIdioma}/{!nroContenido}',
     responseBodyType: ResourceResponseBodyType.Json
   })
-  declare getPromotionDetail: IResourceMethodObservable<{
+  getPromotionDetail!: IResourceMethodObservable<{
     nroRestaurante: number;
     nroIdioma: number;
     nroContenido: number;
