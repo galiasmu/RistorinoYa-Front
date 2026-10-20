@@ -1,0 +1,68 @@
+<section class="page page-narrow">
+  <h1 i18n>Crear cuenta</h1>
+  <p class="text-muted" i18n>Tus preferencias nos ayudan a recomendarte restaurantes.</p>
+
+  @if (error()) {
+    <div class="alert">{{ error() }}</div>
+  }
+
+  <form class="card" [formGroup]="registroForm" (ngSubmit)="registrar()">
+    <div class="form-row">
+      <div class="form-field">
+        <label for="nombre" i18n>Nombre</label>
+        <input id="nombre" formControlName="nombre">
+      </div>
+      <div class="form-field">
+        <label for="apellido" i18n>Apellido</label>
+        <input id="apellido" formControlName="apellido">
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="correo" i18n>Correo electrónico</label>
+      <input id="correo" type="email" formControlName="correo">
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="telefonos" i18n>Teléfono</label>
+        <input id="telefonos" formControlName="telefonos">
+      </div>
+      <div class="form-field">
+        <label for="localidad" i18n>Localidad</label>
+        <select id="localidad" formControlName="nroLocalidad">
+          @for (localidad of localidades; track localidad.nroLocalidad) {
+            <option [ngValue]="localidad.nroLocalidad">{{ localidad.nomLocalidad }}, {{ localidad.nomProvincia }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="clave" i18n>Clave</label>
+        <input id="clave" type="password" formControlName="clave">
+      </div>
+      <div class="form-field">
+        <label for="confirmacion" i18n>Repetir clave</label>
+        <input id="confirmacion" type="password" formControlName="confirmacionClave">
+      </div>
+    </div>
+
+    @if (registroForm.invalid && registroForm.touched) {
+      <p class="form-error" i18n>Completá todos los datos (la clave debe tener al menos 4 caracteres).</p>
+    }
+
+    <h3 i18n>Preferencias gastronómicas</h3>
+    @for (categoria of categorias; track categoria) {
+      <p class="text-muted">{{ categoria }}</p>
+      @for (valor of valoresDe(categoria); track valor.nroValorDominio) {
+        <label class="chip">
+          <input type="checkbox" (change)="cambiarPreferencia(valor, $event)"> {{ valor.valorDominio }}
+        </label>
+      }
+    }
+
+    <p><button class="btn" type="submit" i18n>Registrarme</button></p>
+  </form>
+</section>

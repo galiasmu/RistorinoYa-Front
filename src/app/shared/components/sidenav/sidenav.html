@@ -1,6 +1,5 @@
 <header class="navbar">
   <div class="navbar-left">
-    <!-- ✅ Logo -->
     <div class="logo">
       <img src="/icon.png" alt="Ristorino Logo" class="logo-img" />
     </div>
@@ -8,13 +7,17 @@
   </div>
 
   <nav class="navbar-center">
-    <a routerLink="/" routerLinkActive="active" class="nav-link">Discover</a>
-    <a routerLink="/promotions/1" class="nav-link">Promotions</a>
-    <a class="nav-link">My Bookings</a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" i18n>Descubrir</a>
+    <a routerLink="/restaurantes" routerLinkActive="active" class="nav-link" i18n>Restaurantes</a>
+    <a routerLink="/mis-reservas" routerLinkActive="active" class="nav-link" i18n>Mis reservas</a>
   </nav>
 
   <div class="navbar-right">
-    <button class="btn-ghost">Sign In</button>
-    <div class="avatar">👤</div>
+    @if (sesion) {
+      <span class="nav-link">{{ sesion.nombre }}</span>
+      <button class="btn-ghost" type="button" (click)="cerrarSesion()" i18n>Cerrar sesión</button>
+    } @else {
+      <a class="btn-ghost" routerLink="/login" i18n>Iniciar sesión</a>
+    }
   </div>
 </header>

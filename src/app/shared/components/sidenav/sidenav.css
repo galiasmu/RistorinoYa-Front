@@ -61,6 +61,7 @@
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
+  white-space: nowrap;
   padding-bottom: 4px;
   border-bottom: 2px solid transparent;
 }
@@ -80,6 +81,7 @@
 
 .btn-ghost {
   background: transparent;
+  text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: #fff;
   border-radius: 999px;
@@ -102,4 +104,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* --- PANTALLAS ANGOSTAS: los links pasan a una segunda fila --- */
+@media (max-width: 720px) {
+  .navbar {
+    flex-wrap: wrap;
+    row-gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .navbar-center {
+    order: 3;
+    width: 100%;
+    justify-content: space-around;
+  }
 }
