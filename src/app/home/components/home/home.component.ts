@@ -1,9 +1,9 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ActivatedRoute, Router, RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 
-import { PromotionModel } from '../../api/models/promotion.model';
-import { PromotionResource } from '../../api/resources/promotion.resource';
+import { IContenido } from '../../api/models/i-contenido';
+import { ContenidosResource } from '../../api/resources/contenidos-resource';
 import { PromotionCardComponent } from '../promotion-card/promotion-card.component';
 
 @Component({
@@ -19,17 +19,18 @@ import { PromotionCardComponent } from '../promotion-card/promotion-card.compone
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _route: ActivatedRoute, private _api: PromotionResource) {
+  constructor(private _resource: ContenidosResource) {
   }
 
   loading = signal(true);
-  promos = signal<PromotionModel[]>([]);
+  promos = signal<IContenido[]>([]);
   error = signal<string | null>(null);
 
+  // Req 12: promociones vigentes en la portada
   ngOnInit(): void {
-    this._api.getVigentes().subscribe({
-      next: (promotions: PromotionModel[]) => {
-        this.promos.set(promotions);
+    this._resource.getContenidos().subscribe({
+      next: (contenidos: IContenido[]) => {
+        this.promos.set(contenidos);
         this.loading.set(false);
       },
       error: () => {

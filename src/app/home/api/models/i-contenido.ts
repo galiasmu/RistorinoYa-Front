@@ -1,16 +1,14 @@
-export interface PromotionModel {
+export interface IContenido {
   nroRestaurante: number;
   nroIdioma: number;
   nroContenido: number;
-  nroSucursal: number;
+  nroSucursal: number | null;
+  razonSocial: string;
+  nomSucursal: string | null;
   contenidoPromocional: string;
-  imagenPromocional: string;
-  contenidoAPublicar: string;
+  imagenPromocional: string | null;
   fechaIniVigencia: string;
   fechaFinVigencia: string;
   costoClick: number | null;
   codContenidoRestaurante: string;
-  razonSocial: string;
-  nomIdioma: string;
-  nomSucursal: string;
 }

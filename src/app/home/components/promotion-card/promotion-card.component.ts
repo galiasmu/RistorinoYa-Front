@@ -1,7 +1,7 @@
-import { Component, input, inject } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Router } from '@angular/router';
-import { ClickService } from '../../services/click/click.service';
-import { PromotionModel } from '../../api/models/promotion.model';
+import { IContenido } from '../../api/models/i-contenido';
+import { ContenidosResource } from '../../api/resources/contenidos-resource';
 
 @Component({
   selector: 'rs-promotion-card',
@@ -10,27 +10,25 @@ import { PromotionModel } from '../../api/models/promotion.model';
   styleUrls: ['./promotion-card.component.css']
 })
 export class PromotionCardComponent {
-  promotion = input.required<PromotionModel>();
-  private router = inject(Router);
-  private clicksSvc = inject(ClickService); // 👈 agregado
+  promotion = input.required<IContenido>();
 
+  constructor(private _router: Router, private _resource: ContenidosResource) {
+  }
+
+  // Req 50: cada clic en un contenido generado por IA se registra en el portal (fee + aviso al restaurante)
   onClick(event: Event): void {
     event.stopPropagation();
     const promo = this.promotion();
 
-    this.clicksSvc
-      .registerClick(promo.nroRestaurante, promo.nroIdioma, promo.nroContenido)
+    this._resource
+      .registrarClick({ nroRestaurante: promo.nroRestaurante, nroIdioma: promo.nroIdioma, nroContenido: promo.nroContenido })
       .subscribe({
-        next: (res) => {
-          console.log('Click registrado, nroClick =', res.nroClick);
-        },
-        error: (err) => {
-          console.error('Error registrando click', err);
-          // igual navegamos, no queremos romper la UX
-        }
+        next: (res) => console.log('Clic registrado, nroClick =', res.nroClick),
+        // Si falla el registro igual se navega, para no cortar la navegación del usuario
+        error: (err) => console.error('Error registrando el clic', err)
       });
 
-    this.router.navigate([
+    this._router.navigate([
       '/promotion',
       promo.nroRestaurante,
       promo.nroIdioma,

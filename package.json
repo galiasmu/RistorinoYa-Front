@@ -5,7 +5,7 @@
     "ng": "ng",
     "extract-i18n": "ng extract-i18n --output-path=src/locale && xliffmerge --profile xliffmerge.json",
     "start-en": "ng serve --open --port 4201 --configuration=development-en",
-    "start": "ng serve",
+    "start": "ng serve --open --configuration=development-es",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { PromotionModel } from '../../api/models/promotion.model';
+import { IContenido } from '../../api/models/i-contenido';
 
 
 @Component({
@@ -13,24 +13,25 @@ import { PromotionModel } from '../../api/models/promotion.model';
 })
 
 export class PromotionDetailComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+
+  constructor(private _route: ActivatedRoute, private _router: Router) {
+  }
 
   loading = signal(false);
-  promotion = signal<PromotionModel | null>(null);
+  promotion = signal<IContenido | null>(null);
 
   ngOnInit(): void {
-    // Get promotion from resolver data
-    const promotionData = this.route.snapshot.data['promotion'];
+    // El contenido lo trae promotionResolver antes de activar la ruta
+    const promotionData = this._route.snapshot.data['promotion'];
 
     if (promotionData) {
       this.promotion.set(promotionData);
     } else {
-      this.router.navigateByUrl('/');
+      this._router.navigateByUrl('/');
     }
   }
 
   goBack() {
-    this.router.navigateByUrl('/');
+    this._router.navigateByUrl('/');
   }
 }

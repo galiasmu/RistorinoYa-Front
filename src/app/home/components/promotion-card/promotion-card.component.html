@@ -1,14 +1,14 @@
 <article class="promo-card">
   <div class="promo-image-wrapper">
     <img
-      [src]="promotion().imagenPromocional"
+      [src]="promotion().imagenPromocional || 'promo-default.jpg'"
       [alt]="promotion().contenidoPromocional"
       class="promo-image"
     />
   </div>
 
   <div class="promo-body">
-    <h3 class="promo-title">{{ promotion().nomSucursal }}</h3>
+    <h3 class="promo-title">{{ promotion().nomSucursal || promotion().razonSocial }}</h3>
     <p class="promo-subtitle">Special offer</p>
 
     <button

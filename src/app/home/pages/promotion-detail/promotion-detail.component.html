@@ -1,5 +1,7 @@
-<div class="promo-detail-layout" *ngIf="!loading(); else loadingTpl">
-  <main class="pd-main" *ngIf="promotion() as promo; else notFound">
+@if (!loading()) {
+<div class="promo-detail-layout">
+  @if (promotion(); as promo) {
+  <main class="pd-main">
     <button class="pd-back" (click)="goBack()">
       ← Back to Promotions
     </button>
@@ -8,7 +10,7 @@
       <!-- CARD IZQUIERDA -->
       <section class="pd-card pd-card-main">
         <div class="pd-image-wrapper">
-          <img [src]="promo.imagenPromocional" [alt]="promo.contenidoPromocional" />
+          <img [src]="promo.imagenPromocional || 'promo-default.jpg'" [alt]="promo.contenidoPromocional" />
         </div>
 
         <div class="pd-tag-row">
@@ -16,16 +18,16 @@
         </div>
 
         <h1 class="pd-title">{{ promo.contenidoPromocional }}</h1>
-        <p class="pd-subtitle">{{ promo.contenidoAPublicar }}</p>
 
         <section class="pd-section">
           <h2 class="pd-section-title">Promotion Details</h2>
-          <p class="pd-text">{{ promo.contenidoAPublicar }}</p>
           <p class="pd-text"><strong>Restaurant:</strong> {{ promo.razonSocial }}</p>
-          <p class="pd-text"><strong>Branch:</strong> {{ promo.nomSucursal }}</p>
-          <p class="pd-text" *ngIf="promo.costoClick">
-            <strong>Cost per Click:</strong> ${{ promo.costoClick }}
-          </p>
+          @if (promo.nomSucursal) {
+            <p class="pd-text"><strong>Branch:</strong> {{ promo.nomSucursal }}</p>
+          }
+          @if (promo.costoClick) {
+            <p class="pd-text"><strong>Cost per Click:</strong> ${{ promo.costoClick }}</p>
+          }
         </section>
 
         <section class="pd-section">
@@ -44,7 +46,10 @@
         <section class="pd-card pd-cta-card">
           <h3>Reserve Now</h3>
           <p>Secure your table at {{ promo.razonSocial }}.</p>
-          <button class="pd-btn-primary">Reserve Now →</button>
+          <button class="pd-btn-primary"
+                  [routerLink]="promo.nroSucursal ? ['/reservar', promo.nroRestaurante, promo.nroSucursal] : ['/restaurantes', promo.nroRestaurante]">
+            Reserve Now →
+          </button>
         </section>
 
         <section class="pd-card">
@@ -58,18 +63,15 @@
         <section class="pd-card">
           <h4 class="pd-aside-title">Participating Location</h4>
           <p class="pd-text"><strong>{{ promo.razonSocial }}</strong></p>
-          <p class="pd-text">Branch: {{ promo.nomSucursal }}</p>
-          <p class="pd-text">Language: {{ promo.nomIdioma }}</p>
+          <p class="pd-text">Branch: {{ promo.nomSucursal || 'All branches' }}</p>
         </section>
       </aside>
     </div>
   </main>
-
-  <ng-template #notFound>
+  } @else {
     <p class="pd-text">Promotion not found.</p>
-  </ng-template>
+  }
 </div>
-
-<ng-template #loadingTpl>
+} @else {
   <div class="pd-loading">Loading promotion…</div>
-</ng-template>
+}
