@@ -28,3 +28,196 @@ body {
 button {
   font-family: inherit;
 }
+
+/* Páginas del portal: formularios, tarjetas y grilla de reservas */
+.page {
+  max-width: 1120px;
+  margin: 32px auto;
+  padding: 0 24px;
+}
+
+.page-narrow {
+  max-width: 480px;
+}
+
+.page h1 {
+  margin: 0 0 8px;
+}
+
+.page a:not(.btn) {
+  color: var(--color-primary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.form-row .form-field {
+  flex: 1;
+  min-width: 140px;
+}
+
+.form-field input,
+.form-field select {
+  background: #1a120c;
+  border: 1px solid var(--color-card-border);
+  border-radius: 10px;
+  color: var(--color-text);
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.form-error {
+  color: #ff8a80;
+  font-size: 0.85rem;
+}
+
+.btn {
+  background: var(--color-primary);
+  color: #2a1a08;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn:hover {
+  background: var(--color-primary-dark);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-card-border);
+}
+
+.btn-outline:hover {
+  background: transparent;
+  border-color: var(--color-primary);
+}
+
+.alert {
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background: rgba(255, 138, 128, 0.12);
+  border: 1px solid #ff8a80;
+}
+
+.alert-ok {
+  background: rgba(246, 178, 26, 0.12);
+  border-color: var(--color-primary);
+}
+
+.chip {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #3a2a20;
+  margin: 0 6px 6px 0;
+}
+
+.turnos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.turno {
+  background: #1a120c;
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  color: var(--color-text);
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.turno small {
+  display: block;
+  color: var(--color-text-muted);
+}
+
+.turno:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.turno-elegido {
+  border-color: var(--color-primary);
+  background: rgba(246, 178, 26, 0.15);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.table a {
+  color: var(--color-primary);
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 0 12px;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table td {
+    display: block;
+    border: none;
+    padding: 4px 0;
+  }
+
+  .table tr {
+    display: block;
+    border-bottom: 1px solid var(--color-card-border);
+    padding: 8px 0;
+  }
+}

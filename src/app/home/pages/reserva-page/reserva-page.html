@@ -1,0 +1,63 @@
+<section class="page">
+  <a [routerLink]="['/restaurantes', sucursal.nroRestaurante]" class="text-muted" i18n>← Volver al restaurante</a>
+  <h1>{{ sucursal.nomSucursal }}</h1>
+  <p class="text-muted">{{ sucursal.calle }} {{ sucursal.nroCalle }}, {{ sucursal.barrio }}</p>
+
+  @if (reserva(); as confirmada) {
+    <div class="card alert-ok">
+      <h2 i18n>¡Reserva confirmada!</h2>
+      <p i18n>Código de reserva: <strong>{{ confirmada.codReservaSucursal }}</strong></p>
+      <p>{{ confirmada.fecha }} · {{ confirmada.hora }} · {{ turnoElegido()?.nomZona }}</p>
+      <p i18n>Adultos: {{ confirmada.cantAdultos }} · Menores: {{ confirmada.cantMenores }}</p>
+      <a class="btn" [href]="sucursal | mapa" target="_blank" rel="noopener" i18n>Cómo llegar</a>
+      <a class="btn btn-outline" routerLink="/mis-reservas" i18n>Ver mis reservas</a>
+    </div>
+  } @else {
+    <form class="card" [formGroup]="reservaForm" (ngSubmit)="consultarDisponibilidad()">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="fecha" i18n>Fecha</label>
+          <input id="fecha" type="date" [min]="hoy" formControlName="fecha">
+        </div>
+        <div class="form-field">
+          <label for="adultos" i18n>Adultos</label>
+          <input id="adultos" type="number" min="1" formControlName="adultos">
+        </div>
+        <div class="form-field">
+          <label for="menores" i18n>Menores</label>
+          <input id="menores" type="number" min="0" formControlName="menores">
+        </div>
+      </div>
+      <button class="btn" type="submit" [disabled]="reservaForm.invalid" i18n>Ver disponibilidad</button>
+    </form>
+
+    @if (mensaje()) {
+      <div class="alert">{{ mensaje() }}</div>
+    }
+
+    @for (zona of zonas(); track zona) {
+      <div class="card">
+        <h3>{{ zona }}</h3>
+        <div class="turnos">
+          @for (turno of turnosDe(zona); track turno.horaDesde) {
+            <button type="button" class="turno" [class.turno-elegido]="turno === turnoElegido()"
+                    [disabled]="!turno.disponible" (click)="turnoElegido.set(turno)">
+              {{ turno.horaDesde }} - {{ turno.horaHasta }}
+              <small i18n>{{ turno.lugaresLibres }} lugares libres</small>
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    @if (turnoElegido(); as turno) {
+      <div class="card">
+        <p>{{ turno.fecha }} · {{ turno.horaDesde }} · {{ turno.nomZona }}</p>
+        @if (!logueado) {
+          <p class="text-muted" i18n>Para confirmar la reserva vas a tener que iniciar sesión.</p>
+        }
+        <button class="btn" type="button" (click)="confirmarReserva()" i18n>Confirmar reserva</button>
+      </div>
+    }
+  }
+</section>

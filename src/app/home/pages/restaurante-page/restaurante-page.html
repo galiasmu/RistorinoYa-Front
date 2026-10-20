@@ -1,0 +1,51 @@
+<section class="page">
+  <a routerLink="/restaurantes" class="text-muted" i18n>← Volver a restaurantes</a>
+  <h1>{{ restaurante.razonSocial }}</h1>
+
+  @if (contenidos.length > 0) {
+    <h2 i18n>Promociones</h2>
+    <div class="cards">
+      @for (contenido of contenidos; track contenido.nroContenido) {
+        <article class="card">
+          <p>{{ contenido.contenidoPromocional }}</p>
+          <span class="chip">{{ contenido.nomSucursal || restaurante.razonSocial }}</span>
+        </article>
+      }
+    </div>
+  }
+
+  <h2 i18n>Sucursales</h2>
+  <div class="form-field page-narrow">
+    <label for="barrio" i18n>Barrio</label>
+    <select id="barrio" [formControl]="filtroBarrio">
+      <option value="" i18n>Todos los barrios</option>
+      @for (barrio of barrios; track barrio) {
+        <option [value]="barrio">{{ barrio }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="cards">
+    @for (sucursal of sucursalesFiltradas; track sucursal.nroSucursal) {
+      <article class="card">
+        <h3>{{ sucursal.nomSucursal }}</h3>
+        <p class="text-muted">{{ sucursal.calle }} {{ sucursal.nroCalle }}, {{ sucursal.barrio }} · {{ sucursal.telefonos }}</p>
+        <p>
+          @for (preferencia of preferenciasDe(sucursal); track preferencia.valor_dominio) {
+            <span class="chip">{{ preferencia.valor_dominio }}</span>
+          }
+        </p>
+        <p class="text-muted">
+          <ng-container i18n>Zonas:</ng-container>
+          @for (zona of zonasDe(sucursal); track zona.cod_zona) {
+            {{ zona.zona }}@if (!$last) {, }
+          }
+        </p>
+        <a class="btn" [routerLink]="['/reservar', sucursal.nroRestaurante, sucursal.nroSucursal]" i18n>Reservar</a>
+        <a class="btn btn-outline" [href]="sucursal | mapa" target="_blank" rel="noopener" i18n>Cómo llegar</a>
+      </article>
+    } @empty {
+      <p class="text-muted" i18n>No hay sucursales en ese barrio.</p>
+    }
+  </div>
+</section>

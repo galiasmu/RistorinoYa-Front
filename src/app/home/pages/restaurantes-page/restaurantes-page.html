@@ -1,0 +1,15 @@
+<section class="page">
+  <h1 i18n>Restaurantes</h1>
+  <p class="text-muted" i18n>Elegí un restaurante para ver sus sucursales y reservar.</p>
+
+  <div class="cards">
+    @for (restaurante of restaurantes; track restaurante.nroRestaurante) {
+      <article class="card">
+        <h3>{{ restaurante.razonSocial }}</h3>
+        <a class="btn" [routerLink]="['/restaurantes', restaurante.nroRestaurante]" i18n>Ver restaurante</a>
+      </article>
+    } @empty {
+      <p class="text-muted" i18n>No hay restaurantes disponibles.</p>
+    }
+  </div>
+</section>
