@@ -2,6 +2,10 @@
   <a routerLink="/restaurantes" class="text-muted" i18n>← Volver a restaurantes</a>
   <h1>{{ restaurante.razonSocial }}</h1>
 
+  @if (restaurante.descripcion) {
+    <p class="text-muted"> {{restaurante.descripcion}}</p>
+  }
+
   @if (contenidos.length > 0) {
     <h2 i18n>Promociones</h2>
     <div class="cards">
