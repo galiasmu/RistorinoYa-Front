@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, computed, signal } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import type { IResourceResponse } from '@ngx-resource/core';
@@ -20,7 +21,7 @@ export class ReservaPage implements OnInit {
   @Input() sucursales: ISucursal[] = [];
 
   sucursal!: ISucursal;
-  hoy = new Date().toISOString().substring(0, 10);
+  hoy = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
 
   reservaForm = new FormGroup({
     fecha: new FormControl<string>(this.hoy, { nonNullable: true, validators: [Validators.required] }),
