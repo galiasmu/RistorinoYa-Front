@@ -1,6 +1,5 @@
 <div class="layout">
 
-
   <!-- CONTENIDO -->
   <main>
     <!-- HERO -->
@@ -12,28 +11,14 @@
           Discover and book the best restaurants in your city.
         </p>
 
-        <!-- SEARCH BAR (placeholder por ahora) -->
-        <div class="hero-search">
+        <!-- Req 10: buscador en lenguaje natural -->
+        <form class="hero-search" [formGroup]="buscadorForm" (ngSubmit)="buscar()">
           <div class="search-field">
-            <span class="search-label">Location</span>
-            <input
-              type="text"
-              placeholder="Location, Cuisine, Restaurant Name..."
-            />
+            <span class="search-label" i18n>¿Qué tenés ganas de comer?</span>
+            <input type="text" formControlName="texto" i18n-placeholder placeholder="Ej: sushi en Nueva Córdoba" />
           </div>
-
-          <div class="search-field">
-            <span class="search-label">Date</span>
-            <input type="date" />
-          </div>
-
-          <div class="search-field">
-            <span class="search-label">Guests</span>
-            <input type="number" min="1" value="2" />
-          </div>
-
-          <button class="btn-primary" routerLink="/restaurantes">Find a Table</button>
-        </div>
+          <button class="btn-primary" type="submit" i18n>Buscar</button>
+        </form>
       </div>
     </section>
 
@@ -52,7 +37,6 @@
           <rs-promotion-card [promotion]="promo"></rs-promotion-card>
         }
       </div>
-
 
       <ng-template #emptyPromos>
         <p class="section-empty">No promotions available at the moment.</p>

@@ -14,6 +14,8 @@ import { sucursalesResolver } from './home/resolvers/sucursales-resolver';
 import { contenidosRestauranteResolver } from './home/resolvers/contenidos-restaurante-resolver';
 import { estadosReservasResolver } from './home/resolvers/estados-reservas-resolver';
 import { authGuard } from './home/guards/auth-guard';
+import { BusquedaResource } from './home/api/resources/busqueda-resource';
+import { busquedaResolver } from './home/resolvers/busqueda-resolver';
 
 export const routes: Routes = [
   {
@@ -63,5 +65,15 @@ export const routes: Routes = [
     resolve: { estados: estadosReservasResolver },
     providers: [ReservasResource, CatalogoResource]
   },
+    {
+    path: 'buscar',
+    loadComponent: () => import('./home/pages/busqueda-page/busqueda-page').then(m => m.BusquedaPage),
+    resolve: { resultados: busquedaResolver },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+    providers: [BusquedaResource]
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' }
+  
+
+
 ];

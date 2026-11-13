@@ -1,0 +1,17 @@
+<section class="page">
+  <a routerLink="/" class="text-muted" i18n>← Volver al inicio</a>
+  <h1 i18n>Resultados para "{{ texto }}"</h1>
+
+  <div class="cards">
+    @for (resultado of resultados; track resultado.nroRestaurante + '-' + resultado.nroSucursal) {
+      <article class="card">
+        <h3>{{ resultado.nomSucursal }}</h3>
+        <p class="text-muted">{{ resultado.calle }} {{ resultado.nroCalle }}, {{ resultado.barrio }}</p>
+        <a class="btn" [routerLink]="['/restaurantes', resultado.nroRestaurante]" i18n>Ver restaurante</a>
+        <a class="btn btn-outline" [routerLink]="['/reservar', resultado.nroRestaurante, resultado.nroSucursal]" i18n>Reservar</a>
+      </article>
+    } @empty {
+      <p class="text-muted" i18n>No encontramos restaurantes para tu búsqueda.</p>
+    }
+  </div>
+</section>

@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { IContenido } from '../../api/models/i-contenido';
 import { ContenidosResource } from '../../api/resources/contenidos-resource';
@@ -12,6 +13,7 @@ import { PromotionCardComponent } from '../promotion-card/promotion-card.compone
   imports: [
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
     PromotionCardComponent
   ],
   templateUrl: './home.component.html',
@@ -19,12 +21,17 @@ import { PromotionCardComponent } from '../promotion-card/promotion-card.compone
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _resource: ContenidosResource) {
+  constructor(private _resource: ContenidosResource, private _router: Router) {
   }
 
   loading = signal(true);
   promos = signal<IContenido[]>([]);
   error = signal<string | null>(null);
+
+  // Req 10: lo que el usuario escribe en el buscador
+  buscadorForm = new FormGroup({
+    texto: new FormControl('', { nonNullable: true })
+  });
 
   // Req 12: promociones vigentes en la portada
   ngOnInit(): void {
@@ -38,5 +45,13 @@ export class HomeComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  // Req 10: lleva a /buscar?texto=..., donde el resolver hace la búsqueda con IA
+  buscar(): void {
+    const texto = this.buscadorForm.controls.texto.value.trim();
+    if (texto) {
+      this._router.navigate(['/buscar'], { queryParams: { texto } });
+    }
   }
 }
